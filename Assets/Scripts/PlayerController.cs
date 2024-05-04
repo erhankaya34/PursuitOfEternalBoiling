@@ -2,12 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
     private bool isDraggingItem = false;
     private GameObject draggedItem;
     [SerializeField] float moveSpeed = 1f;
+    private Vector3 lastMovementDirection = Vector3.right; 
     private Rigidbody2D _playerRigidbody;
     private Animator _playerAnimator;
 
@@ -19,24 +22,50 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        HandleMovement();
         HandleShooting();
         HandleInteraction();
+    }
+
+    private void FixedUpdate()
+    {
+        HandleMovement();
+    }
+
+    private void LateUpdate()
+    {
+        SaveTheDirection();
     }
 
     private void HandleMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        
-        Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized * Time.deltaTime * moveSpeed;
-        Vector2 newPosition = _playerRigidbody.position + movement;
-        
+
+        Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized;
+        Vector2 newPosition = _playerRigidbody.position + movement * Time.deltaTime * moveSpeed;
+
         bool isMoving = movement.magnitude > 0f;
 
-        _playerRigidbody.MovePosition(newPosition);  
+        if (horizontalInput < 0f)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            lastMovementDirection = Vector3.left; 
+        }
+        else if (horizontalInput > 0f)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            lastMovementDirection = Vector3.right; 
+        }
+        _playerRigidbody.MovePosition(newPosition);
         _playerAnimator.SetBool("isMoving", isMoving);
+    }
 
+    private void SaveTheDirection()
+    {
+        if (Input.GetAxis("Horizontal") == 0f && Input.GetAxis("Vertical") == 0f) //if player is not moving
+        {
+            transform.localScale = new Vector3(lastMovementDirection.x, 1, 1);
+        }
     }
 
     private void HandleShooting()
@@ -90,4 +119,3 @@ public class PlayerController : MonoBehaviour
         // Nesneyi sürükleme işlemi
     }
 }
-
