@@ -5,6 +5,7 @@ namespace Enemy
     public class EnemyAI : MonoBehaviour
     {
         [SerializeField] private GameObject _player;
+        [SerializeField] private float detectionRange = 10f;  
         private Rigidbody2D _rigidbody2D;
         private EnemyStats _enemyStats;
 
@@ -27,8 +28,18 @@ namespace Enemy
         private void MoveTowardsPlayer()
         {
             Vector2 targetPosition = _player.transform.position;
-            Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
-            _rigidbody2D.velocity = direction * _enemyStats.Speed; 
+            Vector2 currentPosition = transform.position;
+            float distanceToPlayer = Vector2.Distance(currentPosition, targetPosition);
+
+            if (distanceToPlayer <= detectionRange)  
+            {
+                Vector2 direction = (targetPosition - currentPosition).normalized;
+                _rigidbody2D.velocity = direction * _enemyStats.Speed; 
+            }
+            else
+            {
+                _rigidbody2D.velocity = Vector2.zero; 
+            }
         }
 
         private void FacePlayer()

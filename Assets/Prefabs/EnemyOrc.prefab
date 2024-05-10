@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 3788888052257169154}
   - component: {fileID: 8232400256548150355}
   - component: {fileID: 2182337382682451469}
-  - component: {fileID: 8215411459079146150}
   - component: {fileID: 3551912243944323791}
   m_Layer: 7
   m_Name: EnemyOrc
@@ -125,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
+  detectionRange: 15
 --- !u!114 &3788888052257169154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +154,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5128941688014583379}
   originalMaterial: {fileID: 2100000, guid: bc49c45f09357424e826a859748d2484, type: 2}
   damagedMaterial: {fileID: 2100000, guid: 45b608c5c2827ff4092023dbcae4283a, type: 2}
+  elementPrefab: {fileID: 0}
 --- !u!50 &2182337382682451469
 Rigidbody2D:
   serializedVersion: 4
@@ -181,23 +182,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8215411459079146150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7604418273362441143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7512ec93c2c5ecb4cbc5112bda9318e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 3
-  _health: 100
-  spriteRenderer: {fileID: 0}
-  originalMaterial: {fileID: 0}
-  damagedMaterial: {fileID: 0}
 --- !u!70 &3551912243944323791
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

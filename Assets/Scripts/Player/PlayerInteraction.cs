@@ -4,42 +4,54 @@ namespace Player
 {
     public class PlayerInteraction : MonoBehaviour
     {
-        private bool isDraggingItem = false;
-        private GameObject draggedItem;
+        private Inventory inventory;
+
+        void Awake()
+        {
+            inventory = GetComponent<Inventory>();
+        }
 
         public void HandleInteraction()
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (!isDraggingItem)
+                bool interactionHandled = false;
+                Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 0.5f);
+
+                // İlk olarak, monument ile etkileşimi kontrol et
+                foreach (var hit in hits)
                 {
-                    PickUpItem();
+                    Monument monument = hit.GetComponent<Monument>();
+                    if (monument != null && inventory.HasElement(monument.requiredElement.elementName))
+                    {
+                        monument.PlaceElement(inventory);
+                        interactionHandled = true;
+                        break;
+                    }
                 }
-                else
+
+                // Eğer monument ile etkileşim olmadıysa ve envanter boşsa yerdeki elementleri kontrol et
+                if (!interactionHandled)
                 {
-                    DropItem();
+                    foreach (var hit in hits)
+                    {
+                        Element element = hit.GetComponent<Element>();
+                        if (element != null && inventory.currentElement == null)
+                        {
+                            inventory.AddElement(element);
+                            hit.gameObject.SetActive(false);
+                            interactionHandled = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Eğer hiçbir etkileşim olmadıysa ve envanterde element varsa elementi yere bırak
+                if (!interactionHandled && inventory.currentElement != null)
+                {
+                    inventory.DropElement();
                 }
             }
-
-            if (isDraggingItem && Input.GetMouseButton(0))
-            {
-                DragItem();
-            }
-        }
-
-        private void PickUpItem()
-        {
-            // Nesneyi toplama işlemi
-        }
-
-        private void DropItem()
-        {
-            // Nesneyi bırakma işlemi
-        }
-
-        private void DragItem()
-        {
-            // Nesneyi sürükleme işlemi
         }
     }
 }
