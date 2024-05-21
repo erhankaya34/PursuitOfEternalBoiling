@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,7 +10,8 @@ namespace Enemy
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Material originalMaterial;
         [SerializeField] private Material damagedMaterial;
-        [SerializeField] private GameObject elementPrefab; // Optional: Element to drop on death
+        [SerializeField] private GameObject elementPrefab; // Optional
+        [SerializeField] private GameObject damagePopupPrefab; // Reference to the damage popup prefab
 
         private Rigidbody2D _rigidbody;
         private EnemyAnimationManager _enemyAnimationManager;
@@ -37,6 +37,7 @@ namespace Enemy
         public void TakeDamage(int damage)
         {
             Health -= damage;
+
             if (Health <= 0)
             {
                 StartCoroutine(DelayedDeath());
@@ -44,6 +45,11 @@ namespace Enemy
             else
             {
                 StartCoroutine(FlashDamageEffect());
+                if (damagePopupPrefab != null)
+                {
+                    var popup = Instantiate(damagePopupPrefab, transform.position, Quaternion.identity);
+                    popup.GetComponent<DamagePopup>().Setup(damage);
+                }
             }
         }
 
@@ -61,7 +67,7 @@ namespace Enemy
             _rigidbody.isKinematic = true;
             
             _enemyAnimationManager.Die();
-            DropElement();  // Call DropElement to handle element spawning
+            DropElement();
             yield return new WaitForSeconds(1);
             Destroy(gameObject);
         }

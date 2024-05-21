@@ -1,3 +1,4 @@
+using Portal;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 public class Monument : MonoBehaviour
@@ -22,7 +23,5 @@ public class Monument : MonoBehaviour
         
         isCompleted = true;
         FindObjectOfType<PortalManager>().CheckMonuments(); 
-
-
     }
 }

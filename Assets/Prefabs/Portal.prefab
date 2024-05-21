@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 5991197351956731867}
   - component: {fileID: 6109855160169102125}
   - component: {fileID: 7618023171923783637}
+  - component: {fileID: -8985551048151165878}
   m_Layer: 0
   m_Name: Portal
-  m_TagString: Untagged
+  m_TagString: Portal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,9 +137,21 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 5.1575093, y: 4.875}
   m_Direction: 0
+--- !u!114 &-8985551048151165878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8054154306053071803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 478610cfc2324db44a17b821a1fbdc20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

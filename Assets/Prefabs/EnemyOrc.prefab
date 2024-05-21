@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
-  detectionRange: 15
+  detectionRange: 13
 --- !u!114 &3788888052257169154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,6 +155,7 @@ MonoBehaviour:
   originalMaterial: {fileID: 2100000, guid: bc49c45f09357424e826a859748d2484, type: 2}
   damagedMaterial: {fileID: 2100000, guid: 45b608c5c2827ff4092023dbcae4283a, type: 2}
   elementPrefab: {fileID: 0}
+  damagePopupPrefab: {fileID: 857640965180953576, guid: 0f8bf7b2de56b094aa17a42058509a70, type: 3}
 --- !u!50 &2182337382682451469
 Rigidbody2D:
   serializedVersion: 4
