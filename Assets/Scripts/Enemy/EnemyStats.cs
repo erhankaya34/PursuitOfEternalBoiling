@@ -10,8 +10,8 @@ namespace Enemy
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Material originalMaterial;
         [SerializeField] private Material damagedMaterial;
-        [SerializeField] private GameObject elementPrefab; // Optional
-        [SerializeField] private GameObject damagePopupPrefab; // Reference to the damage popup prefab
+        [SerializeField] private GameObject elementPrefab;
+        [SerializeField] private GameObject damagePopupPrefab;
 
         private Rigidbody2D _rigidbody;
         private EnemyAnimationManager _enemyAnimationManager;
@@ -25,7 +25,7 @@ namespace Enemy
         public int Health
         {
             get { return _health; }
-            set { _health = Mathf.Max(0, value); } // Health value cannot be negative
+            set { _health = Mathf.Max(0, value); }
         }
 
         private void Awake()
@@ -38,6 +38,21 @@ namespace Enemy
         {
             Health -= damage;
 
+            if (damagePopupPrefab != null)
+            {
+                var popup = Instantiate(damagePopupPrefab, transform.position, Quaternion.identity);
+                popup.GetComponent<DamagePopup>().Setup(damage);
+            }
+
+            if (DamageCameraShake.Instance != null)
+            {
+                DamageCameraShake.Instance.TriggerShake();
+                if (damage >= 80)
+                {
+                    DamageCameraShake.Instance.TriggerHighImpactEffect(transform); // Trigger the high impact effect
+                }
+            }
+
             if (Health <= 0)
             {
                 StartCoroutine(DelayedDeath());
@@ -45,11 +60,6 @@ namespace Enemy
             else
             {
                 StartCoroutine(FlashDamageEffect());
-                if (damagePopupPrefab != null)
-                {
-                    var popup = Instantiate(damagePopupPrefab, transform.position, Quaternion.identity);
-                    popup.GetComponent<DamagePopup>().Setup(damage);
-                }
             }
         }
 
@@ -65,6 +75,7 @@ namespace Enemy
             _speed = 0;
             _rigidbody.velocity = Vector2.zero;
             _rigidbody.isKinematic = true;
+            GetComponent<Collider2D>().enabled = false;
             
             _enemyAnimationManager.Die();
             DropElement();

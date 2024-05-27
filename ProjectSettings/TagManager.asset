@@ -8,6 +8,7 @@ TagManager:
   - Cauldron
   - Enemy
   - Portal
+  - Tree
   layers:
   - Default
   - TransparentFX

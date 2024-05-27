@@ -4,11 +4,11 @@ namespace Player
 {
     public class PlayerInteraction : MonoBehaviour
     {
-        private Inventory inventory;
+        private PlayerInventory _playerInventory;
 
         void Awake()
         {
-            inventory = GetComponent<Inventory>();
+            _playerInventory = GetComponent<PlayerInventory>();
         }
 
         public void HandleInteraction()
@@ -22,9 +22,9 @@ namespace Player
                 foreach (var hit in hits)
                 {
                     Monument monument = hit.GetComponent<Monument>();
-                    if (monument != null && inventory.HasElement(monument.requiredElement.elementName))
+                    if (monument != null && _playerInventory.HasElement(monument.requiredElement.elementName))
                     {
-                        monument.PlaceElement(inventory);
+                        monument.PlaceElement(_playerInventory);
                         interactionHandled = true;
                         break;
                     }
@@ -36,9 +36,9 @@ namespace Player
                     foreach (var hit in hits)
                     {
                         Element element = hit.GetComponent<Element>();
-                        if (element != null && inventory.currentElement == null)
+                        if (element != null && _playerInventory.currentElement == null)
                         {
-                            inventory.AddElement(element);
+                            _playerInventory.AddElement(element);
                             hit.gameObject.SetActive(false);
                             interactionHandled = true;
                             break;
@@ -47,9 +47,9 @@ namespace Player
                 }
 
                 // Eğer hiçbir etkileşim olmadıysa ve envanterde element varsa elementi yere bırak
-                if (!interactionHandled && inventory.currentElement != null)
+                if (!interactionHandled && _playerInventory.currentElement != null)
                 {
-                    inventory.DropElement();
+                    _playerInventory.DropElement();
                 }
             }
         }
