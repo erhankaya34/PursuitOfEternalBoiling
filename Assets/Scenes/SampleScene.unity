@@ -34379,6 +34379,15 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  fireEffectPrefab: {fileID: 5605115796194109188, guid: b4d8908c0a70f6f41919b0b4c567b03d, type: 3}
+  ashPrefab: {fileID: 7645384158007763857, guid: 286eda5ac6ac254448a4d97d0a2ccc8e, type: 3}
+  treeLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fireDuration: 4
+  lastAttackTime: 0
+  _lastUltimateTime: -10
+  _isUltimateActive: 0
 --- !u!114 &1129477018
 MonoBehaviour:
   m_ObjectHideFlags: 0
